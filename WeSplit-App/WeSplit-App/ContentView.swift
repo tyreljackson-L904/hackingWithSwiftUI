@@ -10,14 +10,14 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State private var name = ""
-    
     var body: some View {
         Form {
-            TextField("Enter your name: ", text: $name)
-            Text("Your name is \(name)")
+            ForEach(0..<50) {_ in
+                Text("Hello")
+            }
         }
     }
+            
 }
 
 struct ContentView_Previews: PreviewProvider {
