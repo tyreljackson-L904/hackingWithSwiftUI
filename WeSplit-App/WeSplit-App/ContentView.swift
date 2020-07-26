@@ -16,9 +16,24 @@ struct ContentView: View {
     
     let tipPercentages = [10, 15, 20, 25, 0]
     
+    var totalPerPerson: Double {
+        let peopleCount = Double(numberOfPeople + 2)
+        let tipSelection = Double(tipPercentages[tipPercentage])
+        let orderAmount = Double(checkAmount) ?? 0
+        
+        
+        let tipValue = orderAmount / 100 * tipSelection
+        let grandTotal = orderAmount + tipValue
+        let amountPerPerson = grandTotal / peopleCount
+        
+        return amountPerPerson
+        
+    }
+    
     var body: some View {
         NavigationView {
             Form {
+                // User amount input/Party size
                 Section {
                     TextField("Amount", text: $checkAmount)
                         .keyboardType(.decimalPad)
@@ -29,6 +44,7 @@ struct ContentView: View {
                         }
                     }
                 }
+                // Tip percentage
                 Section(header: Text("Tip Percentage")) {
                     Picker("Tip Percentage", selection: $tipPercentage) {
                         ForEach(0..<tipPercentages.count) {
@@ -37,9 +53,9 @@ struct ContentView: View {
                     }
                     .pickerStyle(SegmentedPickerStyle())
                 }
-                
+                // Check Amount
                 Section {
-                    Text("$\(checkAmount)")
+                    Text("$\(totalPerPerson, specifier: "%.2f")")
                 }
             }
         .navigationBarTitle("WeSplit")
